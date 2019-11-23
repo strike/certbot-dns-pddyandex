@@ -8,7 +8,7 @@ source "$_dir/config.sh"
 DOMAIN=$(expr match "$CERTBOT_DOMAIN" '.*\.\(.*\..*\)')
 	
 # Create TXT record
-CREATE_DOMAIN="_acme-challenge.$CERTBOT_DOMAIN"
+CREATE_DOMAIN="_acme-challenge"
 RECORD_ID=$(curl -s -X POST "https://pddimp.yandex.ru/api2/admin/dns/add" \
      -H "PddToken: $API_KEY" \
      -d "domain=$CERTBOT_DOMAIN&type=TXT&content=$CERTBOT_VALIDATION&ttl=3600&subdomain=$CREATE_DOMAIN" \
