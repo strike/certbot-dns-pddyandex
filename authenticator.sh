@@ -21,5 +21,16 @@ fi
 
 echo $RECORD_ID > /tmp/CERTBOT_$CERTBOT_DOMAIN/RECORD_ID
 
-# Sleep to make sure the change has time to propagate over to DNS
-sleep 5
+# Wail to make sure the change has time to propagate over to DNS
+c_max=10
+for DNS in dns2.yandex.net 8.8.8.8 ; do 
+	c=0
+	while [ $c -ne $c_max ]; do
+		dig $CREATE_DOMAIN.$CERTBOT_DOMAIN -t txt @dns2.yandex.net +short | grep $CERTBOT_VALIDATION && \
+			c=$(( $c + 1 )) && sleep 1 && echo $c && continue \
+			|| sleep 60 && c=0 && echo $c 
+	done
+done
+
+
+
