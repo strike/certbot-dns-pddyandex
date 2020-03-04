@@ -27,8 +27,8 @@ for DNS in dns2.yandex.net 8.8.8.8 ; do
 	c=0
 	while [ $c -ne $c_max ]; do
 		dig $CREATE_DOMAIN.$CERTBOT_DOMAIN -t txt @dns2.yandex.net +short | grep $CERTBOT_VALIDATION && \
-			c=$(( $c + 1 )) && sleep 1 && echo $c && continue \
-			|| sleep 60 && c=0 && echo $c 
+			c=$(( $c + 1 )) && sleep 1 && continue \
+			|| sleep 60 && c=0 &&
 	done
 done
 
